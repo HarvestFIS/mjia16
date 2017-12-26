@@ -1,5 +1,5 @@
 import axios from './apiIntercept.js'
-const  createPromise = (url = "", method = 'GET', data = {}) => {
+const  createPromise = (url = "", data = {}, method = 'GET') => {
 	let _params; 
 	if(url.indexOf("undefined")){
 		console.log('%c'+url,'color:red','请检查请求参数');
