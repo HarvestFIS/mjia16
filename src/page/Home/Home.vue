@@ -9,7 +9,8 @@
 	</div>
 </template>
 <script type="text/javascript">
-	import ajax from '@/api/ajax.js'
+	// import ajax from '@/api/ajax.js'
+	import {findLoan} from '@/api/api.js'
 	export default {
 		methods:{
 			push () {
@@ -18,6 +19,7 @@
 			back () {
 				
 			},
+			// 这个是原生ajax调用的方法
 			getInfotion() {
 				// http://www.zalljinfu.com/applyInformation/findLoanIntentionDynamicInfoListForZjf.do
 				ajax({
@@ -35,10 +37,16 @@
 						console.log(x)
 					}
 				})
+			},
+
+			getInformation() {
+				let result = findLoan()
+				console.log(result)
 			}
 		},
 		mounted() {
-			this.getInfotion();
+			// this.getInfotion();
+			this.getInformation();
 		}
 	}
 </script>
