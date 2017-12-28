@@ -9,6 +9,7 @@
 	</div>
 </template>
 <script type="text/javascript">
+	import ajax from '@/api/ajax.js'
 	export default {
 		methods:{
 			push () {
@@ -16,7 +17,28 @@
 			},
 			back () {
 				
+			},
+			getInfotion() {
+				// http://www.zalljinfu.com/applyInformation/findLoanIntentionDynamicInfoListForZjf.do
+				ajax({
+					url: '/applyInformation/findLoanIntentionDynamicInfoListForZjf.do',
+					type: 'post',
+					beforeSend: function(){
+						console.log('这个方法会先执行')
+					},
+					success: function(data, x) {
+						console.log(data)
+						console.log(x)
+					},
+					error: function(status, x) {
+						console.log(status)
+						console.log(x)
+					}
+				})
 			}
+		},
+		mounted() {
+			this.getInfotion();
 		}
 	}
 </script>

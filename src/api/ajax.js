@@ -41,7 +41,7 @@ const merage = (params) => {
     params = params || {};
 
     for (const key in config) {
-        config[i] = params[i] === undefined ? config[i] : params[i];
+        config[key] = params[key] === undefined ? config[key] : params[key];
     }
 
     return config;
@@ -78,7 +78,7 @@ const ajax = (config) => {
 
     // 注意这个地方一定要是方法
     if (typeof config.beforeSend === 'function') {
-        cofnig.beforeSend();
+        config.beforeSend();
     }
 
     xhr.send(config.data);
@@ -88,16 +88,16 @@ const ajax = (config) => {
         // 判断是否完成
         if(xhr.readyState === 4) {
             if(typeof config.complete === 'function') {
-                config.complete();
+                config.complete(xhr.status, xhr);
             }
 
             if(xhr.status === 200) {
                 if(typeof config.success === 'function') {
-                    config.success();
+                    config.success(xhr.responseText, xhr);
                 }
             } else {
                 if(typeof config.error === 'function') {
-                    config.error(); 
+                    config.error(xhr.status, xhr); 
                 }
             }
         }

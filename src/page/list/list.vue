@@ -3,11 +3,9 @@
 		<button @click='push'>
 			这是list
 		</button>
-		<popup :show='show' v-on:onLeft='closePopup'></popup>
 	</div>
 </template>
 <script type="text/javascript">
-import Popup from '@/components/popup.vue'
 	export default {
 		data () {
 			return {
@@ -20,7 +18,6 @@ import Popup from '@/components/popup.vue'
 				this.$M.setCookie();
 			},
 			closePopup () {
-				this.show = false;
 			}
 		},
 		components:{
