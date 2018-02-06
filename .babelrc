@@ -11,3 +11,7 @@
       "presets": ["env", "stage-2"]    }
   }
 }
+//modules:
+//This option lets you configure to which module format ES6 modules are transpiled:
+//Transpile to popular module formats: "amd", "commonjs", "systemjs", "umd"
+//Don’t transpile: false

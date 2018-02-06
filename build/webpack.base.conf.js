@@ -7,6 +7,9 @@ const webpack = require('webpack')
 const vuxLoader = require('vux-loader') //使用vux的ui 必须使用这个来加载
 
 function resolve (dir) {
+	//console.log(dir);
+	//console.log(path.resolve(__dirname, 'src/common/js/util.js'));
+	//console.log(path.join(__dirname, '..', dir));
   return path.join(__dirname, '..', dir)
 }
 
@@ -27,6 +30,7 @@ const webpackConfig = {
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
+	  'jiaUtil$': resolve( 'src/common/js/util.js'),
     }
   },
   module: {
@@ -39,7 +43,8 @@ const webpackConfig = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: [resolve('src'), resolve('test')]
+        include: [resolve('src'), resolve('test')],
+	    exclude: [resolve('node_modules')] // 不需要编译node_modules下的js
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,

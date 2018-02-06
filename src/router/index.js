@@ -1,54 +1,44 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from '@/store/store'
-import HelloWorld from '@/components/HelloWorld'
-//import routerArray from './routerArray.js'
-const home = r => require.ensure([], () => r(require('../page/Home/Home.vue')),'home');
-const detail = r => require.ensure([], () => r(require('../page/detail/detail.vue')),'detail')
-const list = r => require.ensure([], () => r(require('../page/list/list.vue')),'list')
-Vue.use(Router)
-// const addRouter = (arr = []) => {
-//   const length = arr.length;
-//   for (let i = 0; i < length; i++) {
-//     const dir = arr[i].folder + '/' + arr[i].name;
 
-//   }
-// }
-// addRouter (routerArray);
-// let arr = [{
-//   path:'/',
-//   folder:'list',
-//   name:'list',
-//   redirect:{
-//     name:'home'
-//   }
-// }];
+Vue.use(Router);
+
+const page1 = r => require.ensure([], () => r(require('../page/page1.vue')),'page1');
+const page2 = r => require.ensure([], () => r(require('../page/page2.vue')),'page2')
+const page3 = r => require.ensure([], () => r(require('../page/page3.vue')),'page3')
 
 const router = new Router({
   routes: [
     {
       path: '/',
       redirect:{
-        name:'home'
-      },
-      components: home
+        name:'page1'
+      }
     },
     {
-      path: '/detail',
-      name: 'detail',
-      component:detail
+      path: '/page2',
+      name: 'page2',
+      component:page2
     },
     {
-      path: '/list',
-      name: 'list',
-      component:list
+      path: '/page3',
+      name: 'page3',
+      component:page3
     },
     {
-      path: '/home',
-      name: 'home',
-      component:home
+      path: '/page1',
+      name: 'page1',
+      component:page1
     }
   ]
+})
+
+//这里可以增加登录校验
+router.beforeEach((to, from, next) => {
+	console.log("router beforeEach");
+	console.log("get->"+store.state.count);
+	next();
 })
 
 

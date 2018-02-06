@@ -1,10 +1,7 @@
-const m = {
-	setCookie: () =>{
-		console.log(document.cookie);
-	},
-	getCookie: () =>{
+export function print(){
+	console.log(111111);
+};
 
-	}
-}
-
-export default m
+export function setCookie(){
+	console.log(document.cookie);
+};
