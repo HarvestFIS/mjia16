@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import * as util from 'jiaUtil'
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
@@ -12,7 +13,5 @@ const store = new Vuex.Store({
 		}
 	}
 })
-
-
 
 export default store;
