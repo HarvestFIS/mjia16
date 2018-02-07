@@ -1,17 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import * as util from 'jiaUtil'
+import state from './state.js'
+import mutations from './mutation.js'
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
-	state: {
-		count: 0
-	},
-	mutations: {
-		increment (state) {
-			state.count++
-		}
-	}
+	state: state,
+	mutations: mutations
 })
 
 export default store;

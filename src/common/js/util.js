@@ -9,7 +9,7 @@ export function print(){
 * @params expiredays	存取的时间
 */
 export function setCookie (key, value, path, expiredays) {
-	if (!key || typeof key !== 'string') { return false};
+	if (!key) { return console.warn("key值为空");};
 	let extDate = new Date();
 	path = 'path=' + ( path || '') +'/;';
 	extDate.setDate(extDate.getDate() + (expiredays || 0));
@@ -18,16 +18,18 @@ export function setCookie (key, value, path, expiredays) {
 };
 
 export function setLocalSt (key, value) {
-	if (!key || typeof key !== 'string' || !window.localStorage) { 
-		return false;
+	if (!key || !window.localStorage) { 
+		console.warn("存储出错");
+		return ;
 	} else {
 		window.localStorage.setItem(key.trim(),value);
 	}
 };
 
 export function setSessionSt (key, value) {
-	if (!key ||  typeof key !== 'string' || !window.sessionStorage) { 
-		return false;
+	if (!key || !window.sessionStorage) { 
+		console.warn("存储出错");
+		return ;
 	} else {
 		window.sessionStorage.setItem(key.trim(),value);
 	}
@@ -39,7 +41,8 @@ export function delCookie (key) {
 
 export function delLocalSt (key) {
 	if (!key || !window.localStorage) { 
-		return false;
+		console.warn("存储出错");
+		return ;
 	} else {
 		window.localStorage.removeItem(key);
 	}
@@ -47,15 +50,17 @@ export function delLocalSt (key) {
 
 export function delSessionSt (key) {
 	if (!key || !window.sessionStorage) { 
-		return false;
+		console.warn("存储出错");
+		return ;
 	} else {
 		window.sessionStorage.removeItem(key);
 	}
 };
 
 export function getCookie (key) {
-	if (typeof key !== 'string') {
-		return false;
+	if (!key) {
+		console.warn("key值为空");
+		return ;
 	}
 	let cookie = document.cookie.split(";");
 	const len = cookie.length;
@@ -68,7 +73,8 @@ export function getCookie (key) {
 
 export function getLocalSt (key) {
 	if (!key || !window.localStorage) { 
-		return false;
+		console.warn("存储出错");
+		return ;
 	} else {
 		window.localStorage.getItem(key);
 	}
@@ -76,7 +82,8 @@ export function getLocalSt (key) {
 
 export function getSessionSt (key) {
 	if (!key || !window.sessionStorage) { 
-		return false;
+		console.warn("存储出错");
+		return ;
 	} else {
 		window.sessionStorage.getItem(key);
 	}
