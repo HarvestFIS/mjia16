@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <transition :name="'mjia-fade-'+(direction === 'forward'?'out':'in')">
+    <transition :name="'mjia-fade-'+(direction === 'forward'?'in':'out')">
       <router-view ></router-view>
     </transition>  
-    {{ddd}}
+    <!-- {{ddd}} -->
   </div>
 </template>
 
@@ -48,8 +48,8 @@ export default {
   will-change: transform;
   transition: all 500ms;
   height: 100%;
-  top: 46px;
-  position: absolute;
+  width: 100%;
+  position: absolute; 
   backface-visibility: hidden;
   perspective: 1000;
 }

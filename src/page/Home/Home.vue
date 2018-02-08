@@ -6,15 +6,18 @@
 		<button @click='push'>
 			这是home
 		</button>
+
+		<router-link to="/detail">详情</router-link>
+		<router-link to="/list">列表</router-link>
 	</div>
 </template>
 <script type="text/javascript">
 	// import ajax from '@/api/ajax.js'
-	import {findLoan} from '@/api/api.js'
+	// import {findLoan} from '@/api/api.js'
 	export default {
 		methods:{
 			push () {
-				window.location.href = 'http://localhost:8888/external_page/demo/demo.html'
+				// window.location.href = 'http://localhost:8888/external_page/demo/demo.html'
 			},
 			back () {
 				
@@ -46,7 +49,7 @@
 		},
 		mounted() {
 			// this.getInfotion();
-			this.getInformation();
+			// this.getInformation();
 		}
 	}
 </script>
@@ -55,6 +58,6 @@
 	.home{
 		width: 100%;
 		height: 400px;
-		background-color: blue;
+		// background-color: blue;  
 	}
 </style>

@@ -6,6 +6,9 @@
 		<button @click='push'>
 			这是detail1111
 		</button>
+
+		<router-link to="/home">首页</router-link>
+		<router-link to="/list">列表</router-link>
 	</div>
 </template>
 <script type="text/javascript">

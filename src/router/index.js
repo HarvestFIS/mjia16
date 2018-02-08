@@ -12,8 +12,7 @@ const router = new Router({
       path: '/',
       redirect: {
         name: 'home'
-      },
-      component: home
+      }
     },
     {
       path: '/detail',

@@ -1,8 +1,8 @@
 <template>
 	<div class="list">
-		<button @click='push'>
-			这是list
-		</button>
+
+		<router-link to="/detail">详情</router-link>
+		<router-link to="/home">首页</router-link>
 	</div>
 </template>
 <script type="text/javascript">
@@ -15,13 +15,12 @@
 		methods:{
 			push () {
 				this.show = true;
-				this.$M.setCookie();
+				
 			},
 			closePopup () {
 			}
 		},
 		components:{
-			Popup
 		}
 	}
 </script>
