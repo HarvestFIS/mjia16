@@ -86,18 +86,20 @@ router.beforeEach((to, from, next) => {
   /**
    * 这里设置需要拦截的页面
    */
-  if (to.matched.some(res => res.meta.requireAuth)) {
-    let token = getStore('userToken')
-    if (token && token !== 'null') {
-      next()
-    } else {
-      next({
-        path: '/login'
-      })
-    }
-  } else {
-    next()
-  }
+  // if (to.matched.some(res => res.meta.requireAuth)) {
+  //   let token = getStore('userToken')
+  //   if (token && token !== 'null') {
+  //     next()
+  //   } else {
+  //     next({
+  //       path: '/login'
+  //     })
+  //   }
+  // } else {
+  //   next()
+  // }
+
+  next()
 })
 
 router.afterEach(function (to) {
