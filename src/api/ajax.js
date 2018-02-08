@@ -1,3 +1,4 @@
+import objectAssign from 'object-assign'
 // 将json格式的参数转成get形式
 const jsonToGet = (data) => {
     var urlStr = '';
@@ -61,7 +62,7 @@ const ajax = (config) => {
     let type = config.type.toUpperCase();
 
     // 这个不管是不是get,post都转
-    config.data = jsonToGet(config.data);
+    config.data = jsonToGet(Object.assign(config.data, isBroswer().bower || {}));
 
     if(type !== 'POST') {
         // 判断是否需要缓存 判断url里面是否有？

@@ -1,9 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import routerView from './routerView.js'
+import state from './state.js'
+import mutations from './mutation.js'
 Vue.use(Vuex)
-export default new Vuex.Store({
-	modules:{
-		routerView,
-	}
+
+const store = new Vuex.Store({
+	state: state,
+	mutations: mutations
 })
+
+export default store;
