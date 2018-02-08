@@ -14,7 +14,7 @@ export default {
 		keys.forEach(function (value, index) {
 			util.setSessionSt(value,userInfo[value]);
 			state.userInfo[value] = userInfo[value];
-		})
+		}) 
 	},
 	delUserInfo (state) {
 		const keys = Object.keys(state.userInfo);
