@@ -167,8 +167,7 @@ export function broswer () {//检测浏览器内核--返回的是两个key，nam
         if (isSafari) {
             var reAppleWebKit = new RegExp("Version/(\\d+(?:\\.\\d*)?)");
             reAppleWebKit.test(sUserAgent);
-            var fAppleWebKitVersion = parseFloat(RegExp["$1"]);
-            _broswer.version = parseFloat(RegExp['$1']);
+            var fAppleWebKitVersion = parseFloat(RegExp["$1"]);             _broswer.version = parseFloat(RegExp['$1']);
             _broswer.safari = true;
             _broswer.name = 'safari';
         } else if (isKonq) {
@@ -200,4 +199,21 @@ export function broswer () {//检测浏览器内核--返回的是两个key，nam
         _broswer.name = 'mozilla';
     }
     return _broswer;
+}
+
+/*
+* 简单的页面跳转
+* @params path  
+* 默认值Y 自刷新
+* -1 1 后退一页 前进一页
+* 页面跳转 
+*/
+export function jumpUrl (path = "Y") {
+	if (path === "Y") {
+		location.reload();
+	} else if ( typeof path === "number") {
+		history.go(path);
+	} else {
+		window.location.href = window.origin + "/" + path;
+	}
 }
