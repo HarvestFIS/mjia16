@@ -12,6 +12,7 @@
 	import JiaHeader from '../component/header.vue'
 	import JiaFooter from '../component/footer.vue'
   import * as util from 'jiaUtil'
+  import c from '@/common/js/MyClass.js'
 
   export default {
 	  name: 'home',
@@ -34,6 +35,8 @@
 	  },
 	  methods: {},
 	  mounted() {
+	  	console.log(new c().count());
+	  	console.log(c.pp());
 	  	console.log("mounted page1");
 	  },
 	  activated(){

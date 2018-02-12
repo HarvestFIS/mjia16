@@ -101,38 +101,39 @@ eg: 'Android-7.0-app-Chrome-62'
 	systemV: 系统版本
 }
 */
-export function isBroswer () {
-	var u = navigator.userAgent;
-	var  broswerT = broswer().name,
-		  version = broswer().version,
-		  	isApp = '',
-		   system = '',
-		  systemV = '';
-	if (u.indexOf('ios/1.0') > -1 || u.indexOf('android/1.0') > -1) {
-		isApp = "app";
-	} else if (u.toLowerCase().indexOf("micromessenger") >= -1) {
-		isApp = 'weChat';
-	} else {
-		isApp = 'h5';
-	}
-	if (u.indexOf('iPhone') > -1) {
-		system = "iPhone";
-    	var str = u.toLowerCase(); 
-    	var ver = str.match(/cpu iphone os (.*?) like mac os/);
-    	systemV = ver[1].replace("_",".");
-	} else if (u.indexOf('Android') > -1) {
-		system = "Android";
-		var p = u.indexOf('Android');
-		systemV = u.substr(p+8,3);
-	} else {
-		system = 'Other';
-	}
-	return {"bower":system + '-' + systemV + '-' + isApp + '-' + broswerT + '-' + version};
-}
-
-export function broswer () {//检测浏览器内核--返回的是两个key，name：浏览器内核的名称---version：浏览器的版本号
-    var _broswer = {};
+export function broswer () {
     var sUserAgent = navigator.userAgent;
+    var _broswer = {
+    	isApp: 'h5',
+    	version: '',
+    	name: '',
+    	system: '',
+    	systemV: '',
+    };
+	if (sUserAgent.indexOf('ios/1.0') > -1 || sUserAgent.indexOf('android/1.0') > -1) {
+		_broswer.isApp = "app";
+	} else if (sUserAgent.toLowerCase().indexOf("micromessenger") >= -1) {
+		_broswer.isApp = 'weChat';
+	} else {
+		_broswer.isApp = 'h5';
+	}
+	if (sUserAgent.indexOf('iPhone') > -1) {
+		_broswer.system = "iPhone";
+    	var str = sUserAgent.toLowerCase(); 
+    	var ver = str.match(/cpu iphone os (.*?) like mac os/);
+    	_broswer.systemV = ver[1].replace("_",".");
+	} else if (sUserAgent.indexOf('Android') > -1) {
+		_broswer.system = "Android";
+		var p = sUserAgent.indexOf('Android');
+		_broswer.systemV = sUserAgent.substr(p+8,3);
+	} else if (sUserAgent.indexOf('Windows') > -1){
+		var p = sUserAgent.match(/Windows NT (\d+)\.(\d)/);
+		_broswer.system = 'Windows';
+		_broswer.systemV = p[1] + '.' + p[2];
+	} else {
+		_broswer.system = 'Other';
+	}
+
     var isOpera = sUserAgent.indexOf("Opera") > -1;
     if (isOpera) {
         //首先检测Opera是否进行了伪装
@@ -167,7 +168,8 @@ export function broswer () {//检测浏览器内核--返回的是两个key，nam
         if (isSafari) {
             var reAppleWebKit = new RegExp("Version/(\\d+(?:\\.\\d*)?)");
             reAppleWebKit.test(sUserAgent);
-            var fAppleWebKitVersion = parseFloat(RegExp["$1"]);             _broswer.version = parseFloat(RegExp['$1']);
+            var fAppleWebKitVersion = parseFloat(RegExp["$1"]);             
+            _broswer.version = parseFloat(RegExp['$1']);
             _broswer.safari = true;
             _broswer.name = 'safari';
         } else if (isKonq) {
@@ -189,6 +191,14 @@ export function broswer () {//检测浏览器内核--返回的是两个key，nam
         _broswer.msie = true;
         _broswer.name = 'msie';
     }
+    /*Edge 浏览器*/
+    var isEdge = sUserAgent.indexOf('Edge') > -1;
+    if (isEdge) {
+    	var reEdge = new RegExp("Edge/(\\d+\\.\\d+)");
+        _broswer.version = parseFloat(RegExp['$1']);
+        _broswer.edge = true;
+        _broswer.name = 'edge';    	
+    }
     // 排除Chrome 及 Konqueror/Safari 的伪装
     var isMoz = sUserAgent.indexOf("Gecko") > -1 && !isChrome && !isKHTML;
     if (isMoz) {
@@ -198,6 +208,7 @@ export function broswer () {//检测浏览器内核--返回的是两个key，nam
         _broswer.mozilla = true;
         _broswer.name = 'mozilla';
     }
+    /*{"bower":system + '-' + systemV + '-' + isApp + '-' + broswerT + '-' + version};*/
     return _broswer;
 }
 
@@ -208,10 +219,10 @@ export function broswer () {//检测浏览器内核--返回的是两个key，nam
 * -1 1 后退一页 前进一页
 * 页面跳转 
 */
-export function jumpUrl (path = "Y") {
-	if (path === "Y") {
+export function jumpUrl (path = 'Y') {
+	if (path === 'Y') {
 		location.reload();
-	} else if ( typeof path === "number") {
+	} else if ( typeof path === 'number') {
 		history.go(path);
 	} else {
 		window.location.href = window.origin + "/" + path;
