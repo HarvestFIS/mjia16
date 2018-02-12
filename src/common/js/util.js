@@ -121,7 +121,12 @@ export function broswer () {
 		_broswer.system = "iPhone";
     	var str = ua.toLowerCase(); 
     	var ver = str.match(/cpu iphone os (.*?) like mac os/);
-    	_broswer.systemV = ver[1].replace("_",".");
+    	_broswer.systemV = ver[1].replace(/_/g,".");
+	} else if (ua.indexOf('iPad') > -1) {
+		_broswer.system = 'iPad';
+    	var str = ua.toLowerCase(); 
+    	var ver = str.match(/cpu os (.*?) like mac os/);
+    	_broswer.systemV = ver[1].replace(/_/g,".");
 	} else if (ua.indexOf('Android') > -1) {
 		_broswer.system = "Android";
 		var p = ua.indexOf('Android');
