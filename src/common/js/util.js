@@ -102,7 +102,7 @@ eg: 'Android-7.0-app-Chrome-62'
 }
 */
 export function broswer () {
-    var sUserAgent = navigator.userAgent;
+    var ua = navigator.userAgent;
     var _broswer = {
     	isApp: 'h5',
     	version: '',
@@ -110,26 +110,26 @@ export function broswer () {
     	system: '',
     	systemV: '',
     };
-	if (sUserAgent.indexOf('ios/1.0') > -1 || sUserAgent.indexOf('android/1.0') > -1) {
+	if (ua.indexOf('ios/1.0') > -1 || ua.indexOf('android/1.0') > -1) {
 		_broswer.isApp = "app";
-	} else if (sUserAgent.toLowerCase().indexOf("micromessenger") > -1) {
+	} else if (ua.toLowerCase().indexOf("micromessenger") > -1) {
 		_broswer.isApp = 'weChat';
 	} else {
 		_broswer.isApp = 'h5';
 	}
-	if (sUserAgent.indexOf('iPhone') > -1) {
+	if (ua.indexOf('iPhone') > -1) {
 		_broswer.system = "iPhone";
-    	var str = sUserAgent.toLowerCase(); 
+    	var str = ua.toLowerCase(); 
     	var ver = str.match(/cpu iphone os (.*?) like mac os/);
     	_broswer.systemV = ver[1].replace("_",".");
-	} else if (sUserAgent.indexOf('Android') > -1) {
+	} else if (ua.indexOf('Android') > -1) {
 		_broswer.system = "Android";
-		var p = sUserAgent.indexOf('Android');
-		_broswer.systemV = sUserAgent.substr(p+8,3);
-	} else if (sUserAgent.indexOf('Windows') > -1){
-		var p = sUserAgent.match(/Windows NT (\d+)\.(\d)/);
+		var p = ua.indexOf('Android');
+		_broswer.systemV = ua.substr(p+8,3);
+	} else if (ua.indexOf('Windows') > -1){
+		var p = ua.match(/Windows NT (\d+)\.(\d)/);
 		if (!p) {
-			p = sUserAgent.match(/Windows Phone (\d+)\.(\d)/);
+			p = ua.match(/Windows Phone (\d+)\.(\d)/);
 			_broswer.system = 'Windows Phone';
 		} else {
 			_broswer.system = 'Windows';
@@ -140,82 +140,27 @@ export function broswer () {
 		_broswer.systemV = '0';
 	}
 
-    var isOpera = sUserAgent.indexOf("Opera") > -1 || sUserAgent.indexOf("OPR") > -1;
-    if (isOpera) {
-        //首先检测Opera是否进行了伪装
-        if (navigator.appName == 'Opera') {
-            //如果没有进行伪装，则直接后去版本号
-            _broswer.version = parseFloat(navigator.appVersion);
-        } else {
-            var reOperaVersion = new RegExp("Opera (\\d+.\\d+)");
-            //使用正则表达式的test方法测试并将版本号保存在RegExp.$1中
-            reOperaVersion.test(sUserAgent);
-            _broswer.version = parseFloat(RegExp['$1']);
-        }
-        _broswer.opera = true;
-        _broswer.name = 'opera';
+    var M,tem;
+    M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+    if(/trident/i.test(M[1])){
+        tem =  /\brv[ :]+(\d+)/g.exec(ua) || [];
+        _broswer.name = 'IE';
+      	_broswer.version = tem[1] || '';
+        return _broswer;
     }
-    var isChrome = sUserAgent.indexOf("Chrome") > -1;
-    if (isChrome) {
-        var reChorme = new RegExp("Chrome/(\\d+\\.\\d+(?:\\.\\d+\\.\\d+))?");
-        reChorme.test(sUserAgent);
-        _broswer.version = parseFloat(RegExp['$1']);
-        _broswer.chrome = true;
-        _broswer.name = 'chrome';
+    if(M[1] === 'Chrome'){
+        tem = ua.match(/\b(OPR|Edge)\/(\d+)/);
+        if(tem != null) {
+        	var arr = tem.slice(1).join(' ').replace('OPR', 'Opera').split(' ');
+        	_broswer.name = arr[0];
+        	_broswer.version = arr[1];
+        	return _broswer;
+        } 
     }
-    //排除Chrome信息，因为在Chrome的user-agent字符串中会出现Konqueror/Safari的关键字
-    var isKHTML = (sUserAgent.indexOf("KHTML") > -1
-        || sUserAgent.indexOf("Konqueror") > -1 || sUserAgent
-            .indexOf("AppleWebKit") > -1)
-        && !isChrome;
-    if (isKHTML) {//判断是否基于KHTML，如果时的话在继续判断属于何种KHTML浏览器
-        var isSafari = sUserAgent.indexOf("AppleWebKit") > -1;
-        var isKonq = sUserAgent.indexOf("Konqueror") > -1;
-        if (isSafari) {
-            var reAppleWebKit = new RegExp("Version/(\\d+(?:\\.\\d*)?)");
-            reAppleWebKit.test(sUserAgent);
-            var fAppleWebKitVersion = parseFloat(RegExp["$1"]);             
-            _broswer.version = parseFloat(RegExp['$1']);
-            _broswer.safari = true;
-            _broswer.name = 'safari';
-        } else if (isKonq) {
-            var reKong = new RegExp(
-                "Konqueror/(\\d+(?:\\.\\d+(?\\.\\d)?)?)");
-            reKong.test(sUserAgent);
-            _broswer.version = parseFloat(RegExp['$1']);
-            _broswer.konqueror = true;
-            _broswer.name = 'konqueror';
-        }
-    }
-    // !isOpera 避免是由Opera伪装成的IE
-    var isIE = sUserAgent.indexOf("compatible") > -1
-        && sUserAgent.indexOf("MSIE") > -1 && !isOpera;
-    if (isIE) {
-        var reIE = new RegExp("MSIE (\\d+\\.\\d+);");
-        reIE.test(sUserAgent);
-        _broswer.version = parseFloat(RegExp['$1']);
-        _broswer.msie = true;
-        _broswer.name = 'msie';
-    }
-    /*Edge 浏览器*/
-    var isEdge = sUserAgent.indexOf('Edge') > -1;
-    if (isEdge) {
-    	var reEdge = new RegExp("Edge/(\\d+\\.\\d+)");
-        _broswer.version = parseFloat(RegExp['$1']);
-        _broswer.edge = true;
-        _broswer.name = 'edge';    	
-    }
-
-    // 火狐浏览器 排除Chrome 及 Konqueror/Safari 的伪装
-    var isMoz = sUserAgent.indexOf("Gecko") > -1 && !isChrome && !isKHTML;
-    if (isMoz) {
-        var reMoz = new RegExp("rv:(\\d+\\.\\d+(?:\\.\\d+)?)");
-        reMoz.test(sUserAgent);
-        _broswer.version = parseFloat(RegExp['$1']);
-        _broswer.mozilla = true;
-        _broswer.name = 'mozilla';
-    }
-    /*{"bower":system + '-' + systemV + '-' + isApp + '-' + broswerT + '-' + version};*/
+    M = M[2]? [M[1], M[2]]: [navigator.appName, navigator.appVersion, '-?'];
+    if((tem = ua.match(/version\/(\d+)/i)) != null) M.splice(1, 1, tem[1]);
+  	_broswer.name = M[0];
+  	_broswer.version = M[1];
     return _broswer;
 }
 
