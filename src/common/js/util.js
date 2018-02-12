@@ -112,7 +112,7 @@ export function broswer () {
     };
 	if (sUserAgent.indexOf('ios/1.0') > -1 || sUserAgent.indexOf('android/1.0') > -1) {
 		_broswer.isApp = "app";
-	} else if (sUserAgent.toLowerCase().indexOf("micromessenger") >= -1) {
+	} else if (sUserAgent.toLowerCase().indexOf("micromessenger") > -1) {
 		_broswer.isApp = 'weChat';
 	} else {
 		_broswer.isApp = 'h5';
@@ -128,13 +128,19 @@ export function broswer () {
 		_broswer.systemV = sUserAgent.substr(p+8,3);
 	} else if (sUserAgent.indexOf('Windows') > -1){
 		var p = sUserAgent.match(/Windows NT (\d+)\.(\d)/);
-		_broswer.system = 'Windows';
+		if (!p) {
+			p = sUserAgent.match(/Windows Phone (\d+)\.(\d)/);
+			_broswer.system = 'Windows Phone';
+		} else {
+			_broswer.system = 'Windows';
+		}
 		_broswer.systemV = p[1] + '.' + p[2];
 	} else {
 		_broswer.system = 'Other';
+		_broswer.systemV = '0';
 	}
 
-    var isOpera = sUserAgent.indexOf("Opera") > -1;
+    var isOpera = sUserAgent.indexOf("Opera") > -1 || sUserAgent.indexOf("OPR") > -1;
     if (isOpera) {
         //首先检测Opera是否进行了伪装
         if (navigator.appName == 'Opera') {
@@ -199,7 +205,8 @@ export function broswer () {
         _broswer.edge = true;
         _broswer.name = 'edge';    	
     }
-    // 排除Chrome 及 Konqueror/Safari 的伪装
+
+    // 火狐浏览器 排除Chrome 及 Konqueror/Safari 的伪装
     var isMoz = sUserAgent.indexOf("Gecko") > -1 && !isChrome && !isKHTML;
     if (isMoz) {
         var reMoz = new RegExp("rv:(\\d+\\.\\d+(?:\\.\\d+)?)");
