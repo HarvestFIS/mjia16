@@ -102,6 +102,7 @@ eg: 'Android-7.0-app-Chrome-62'
 }
 */
 export function broswer () {
+	/*代码 待优化简洁*/
     var ua = navigator.userAgent;
     var _broswer = {
     	isApp: 'h5',
